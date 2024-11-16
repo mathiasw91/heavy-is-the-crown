@@ -28,7 +28,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased grid grid-rows-[auto_1fr] overflow-hidden`}>
         <Nav />
-        {children}
+        <main className="p-4">
+          {children}
+        </main>
       </body>
     </html>
   );

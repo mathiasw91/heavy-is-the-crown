@@ -12,6 +12,7 @@ export default {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
         highlight: "var(--highlight)",
+        gold: "var(--gold)",
       },
     },
   },
