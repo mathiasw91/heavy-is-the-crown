@@ -1,17 +1,14 @@
-import Leader from './leader';
-import Standing from './standing';
-import { testdata as standings } from './testdata';
+import { Suspense } from 'react';
+import { getStandings } from '../util/db';
+import Standings from './standings';
 
-export default function Standings() {
+export default async function StandingsPage() {
+  const standingsPromise = getStandings();
   return (
     <div className='flex flex-col gap-2'>
-      {standings.map(standing => (
-        (standing.rank === 1) && (
-          <Leader key={standing.rank} standing={standing} />
-        ) || (
-          <Standing key={standing.rank} standing={standing} />
-        )
-      ))}
+      <Suspense fallback={<div>Loading...</div>}>
+        <Standings standingsPromise={standingsPromise} />
+      </Suspense>
     </div>
   );
 }
