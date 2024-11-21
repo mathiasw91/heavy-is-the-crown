@@ -1,8 +1,8 @@
-import { GetStandingsRow } from '../util/db';
+import { GetStandingsResult } from '../util/db';
 import { formatWinrate } from '../util/util';
 
 type StandingProps = {
-  standing: GetStandingsRow;
+  standing: GetStandingsResult;
 }
 
 export default function Standing({standing: { name, rank, matches_won, winrate }}: StandingProps) {

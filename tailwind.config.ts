@@ -13,6 +13,7 @@ export default {
         secondary: "var(--secondary)",
         highlight: "var(--highlight)",
         gold: "var(--gold)",
+        error: "var(--error)",
       },
     },
   },

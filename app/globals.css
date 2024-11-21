@@ -7,10 +7,28 @@
   --secondary: #ffffff;
   --highlight: #494949;
   --gold: rgb(250 204 21);
+  --error: #7c1111;
 }
 
 body {
   color: var(--secondary);
   background: var(--primary);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.clickable {
+  @apply bg-secondary text-primary px-4 py-2 rounded-lg;
+}
+
+button:not(.unstyled) {
+  @apply clickable;
+}
+
+input, textarea, select {
+  @apply bg-primary text-secondary border rounded py-1 px-2;
+}
+
+
+.overlay-container {
+  @apply backdrop-blur-md absolute top-0 right-0 bottom-0 left-0 p-4;
 }

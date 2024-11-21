@@ -25,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased grid grid-rows-[auto_1fr] overflow-hidden`}>
+    <html lang="en" className='h-full'>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased grid grid-rows-[auto_1fr] h-full overflow-hidden`}>
         <Nav />
         <main className="p-4">
           {children}

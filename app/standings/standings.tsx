@@ -1,12 +1,12 @@
 'use client'
 
 import { use } from 'react';
-import { GetStandingsRow } from '../util/db';
 import Leader from './leader';
 import Standing from './standing';
+import { GetStandingsResult } from '../util/db';
 
 type StandingsProps = {
-  standingsPromise: Promise<GetStandingsRow[]>;
+  standingsPromise: Promise<GetStandingsResult[]>;
 }
 
 export default function Standings({ standingsPromise }: StandingsProps) {
@@ -16,7 +16,7 @@ export default function Standings({ standingsPromise }: StandingsProps) {
     <div>play your first match</div>
   );
   return (
-    <div>
+    <div className='flex flex-col gap-2 overlow-y-auto'>
       {standings.map(standing => (
         (standing.rank === 1) && (
           <Leader key={standing.rank} standing={standing} />
