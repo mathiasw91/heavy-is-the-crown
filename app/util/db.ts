@@ -4,14 +4,20 @@ import { Pool } from "pg";
 import { CreateMatchInput } from '../ui/editMatchModal/types';
 import { formatDate } from './util';
 
-const pool = new Pool({
-  user: process.env.PGSQL_USER,
-  password: process.env.PGSQL_PASSWORD,
-  host: process.env.PGSQL_HOST,
-  port: parseInt(process.env.PGSQL_PORT!),
-  database: process.env.PGSQL_DATABASE,
-  ssl: process.env.PGSQL_SSL === 'true',
-});
+let pool: Pool;
+if (process.env.DATABASE_URL) {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+  });
+} else {
+  pool = new Pool({
+    user: process.env.PGSQL_USER,
+    password: process.env.PGSQL_PASSWORD,
+    host: process.env.PGSQL_HOST,
+    port: parseInt(process.env.PGSQL_PORT!),
+    database: process.env.PGSQL_DATABASE,
+  });
+}
 
 type GetStandingsRow = {
   id: number;
