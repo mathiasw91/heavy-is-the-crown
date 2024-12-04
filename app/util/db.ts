@@ -10,6 +10,7 @@ const pool = new Pool({
   host: process.env.PGSQL_HOST,
   port: parseInt(process.env.PGSQL_PORT!),
   database: process.env.PGSQL_DATABASE,
+  ssl: process.env.PGSQL_SSL === 'true',
 });
 
 type GetStandingsRow = {
