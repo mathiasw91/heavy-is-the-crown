@@ -42,7 +42,7 @@ export async function getStandings() {
       .sort((a, b) => b.matches_won - a.matches_won)
       .map((row, index) => ({
         ...row,
-        winrate: row.matches_won ? row.matches_played / row.matches_won : 0,
+        winrate: row.matches_played ? row.matches_won / row.matches_played : 0,
         rank: index + 1,
       }));
   } catch ( error ) {
