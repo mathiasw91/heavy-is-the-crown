@@ -5,7 +5,6 @@ import { CreateMatchInput } from '../ui/editMatchModal/types';
 import { formatDate } from './util';
 
 let pool: Pool;
-console.log(process.env);
 if (process.env.DATABASE_URL) {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -66,8 +65,8 @@ export async function getSummary() {
       'SELECT COUNT(*) as amountPlayed, MAX(date) as lastPlayed FROM match;'
     );
     return {
-      amountplayed: parseInt(response.rows[0].amountplayed),
-      lastplayed: formatDate(response.rows[0].lastplayed),
+      amountplayed: response.rows[0] && parseInt(response.rows[0].amountplayed) || 0,
+      lastplayed: response.rows[0] && formatDate(response.rows[0].lastplayed) || 'never',
     };
   } catch (error) {
     console.log(error);
