@@ -5,6 +5,7 @@ import { CreateMatchInput } from '../ui/editMatchModal/types';
 import { formatDate } from './util';
 
 let pool: Pool;
+console.log(process.env);
 if (process.env.DATABASE_URL) {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
