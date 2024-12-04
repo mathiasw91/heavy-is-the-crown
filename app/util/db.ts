@@ -65,8 +65,8 @@ export async function getSummary() {
       'SELECT COUNT(*) as amountPlayed, MAX(date) as lastPlayed FROM match;'
     );
     return {
-      amountplayed: response.rows[0] && parseInt(response.rows[0].amountplayed) || 0,
-      lastplayed: response.rows[0] && formatDate(response.rows[0].lastplayed) || 'never',
+      amountplayed: response.rows[0]?.amountplayed && parseInt(response.rows[0].amountplayed) || 0,
+      lastplayed: response.rows[0]?.lastplayed && formatDate(response.rows[0].lastplayed) || 'never',
     };
   } catch (error) {
     console.log(error);
