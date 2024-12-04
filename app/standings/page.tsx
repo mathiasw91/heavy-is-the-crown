@@ -3,6 +3,8 @@ import { getStandings, getSummary } from '../util/db';
 import Standings from './standings';
 import { Summary } from './summary';
 
+export const dynamic = 'force-dynamic'
+
 export default async function StandingsPage() {
   const standingsPromise = getStandings();
   const summaryPromise = getSummary();
