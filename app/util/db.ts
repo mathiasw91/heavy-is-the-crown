@@ -39,7 +39,7 @@ export async function getStandings() {
         matches_played: parseInt(row.matches_played),
         matches_won: parseInt(row.matches_won),
       }))
-      .sort((a, b) => a.matches_won - b.matches_won)
+      .sort((a, b) => b.matches_won - a.matches_won)
       .map((row, index) => ({
         ...row,
         winrate: row.matches_won ? row.matches_played / row.matches_won : 0,
