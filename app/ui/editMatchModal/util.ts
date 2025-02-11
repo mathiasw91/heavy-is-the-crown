@@ -2,7 +2,7 @@ import { CreateMatchInput, MatchState } from './types';
 
 export function validateMatchState(match: MatchState): string[] {
   const errors = [];
-  if (match.game === undefined || !match.game.length) {
+  if (match.game === undefined) {
     errors.push('A game needs to be selected.');
   }
   if (match.players.filter(player => player.didPlay).length < 2) {

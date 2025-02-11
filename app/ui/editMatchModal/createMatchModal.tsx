@@ -4,7 +4,8 @@ import { Fragment, useEffect, useState } from 'react';
 import { createMatch, getGamesAndPlayers } from './actions';
 import { MatchState } from './types';
 import { mapMatchStateToInput, validateMatchState } from './util';
-import { GetGamesAndPlayersGameRow } from '@/app/util/db';
+import { createGame, GetGamesAndPlayersGameRow } from '@/app/util/db';
+import AddGame from './addGame';
 
 type CreateMatchModalProps = {
   onClose: () => void;
@@ -18,6 +19,7 @@ export default function CreateMatchModal({ onClose }: CreateMatchModalProps) {
   });
   const [allGames, setAllGames] = useState<GetGamesAndPlayersGameRow[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
+  const [showNewGame, setShowNewGame] = useState(false);
 
   useEffect(() => {
     const fetchGamesAndPlayers = async () => {
@@ -48,6 +50,25 @@ export default function CreateMatchModal({ onClose }: CreateMatchModalProps) {
     }));
   }
 
+  const onGameChange = (val: string) => {
+    if (val === 'add-new') {
+      setShowNewGame(true);
+      return;
+    }
+    setMatch({...match, game: parseInt(val)});
+  }
+
+  const addGame = async (name: string) => {
+    try {
+      const id = await createGame({ name });
+      setAllGames(old => [...old, {id, name}]);
+      setMatch(old => ({...old, game: id}))
+      setShowNewGame(false);
+    } catch {
+      setErrors(['Error adding a new game']);
+    }
+  }
+
   const submit = async () => {
     const errs = validateMatchState(match);
     if(errs.length) {
@@ -74,12 +95,17 @@ export default function CreateMatchModal({ onClose }: CreateMatchModalProps) {
         </div>
         <div className={rowClasses}>
           <label>Game</label>
-          <select defaultValue='' value={match.game} onChange={(event)=> {setMatch({...match, game: event.target.value})}}>
-            <option value="" disabled>Select a game</option>
-            {allGames.map(({id, name}) => (
-              <option key={id} value={id}>{name}</option>
-            ))}
-          </select>
+          {showNewGame && (
+            <AddGame onSubmit={(name) => addGame(name)}/>
+          ) || (
+            <select defaultValue='' value={match.game} onChange={(e) => onGameChange(e.target.value)}>
+              <option value="" disabled>Select a game</option>
+              <option value="add-new">Add new game</option>
+              {allGames.map(({id, name}) => (
+                <option key={id} value={id}>{name}</option>
+              ))}
+            </select>
+          )}
         </div>
         <div className={rowClasses}>
           <label>Players</label>

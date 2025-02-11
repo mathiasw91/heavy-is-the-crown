@@ -115,3 +115,19 @@ export async function getGamesAndPlayers() {
   }
 
 }
+export type CreateGameInput = { name: string };
+export async function createGame({ name }: CreateGameInput): Promise<number> {
+  const client = await pool.connect();
+  try {
+    const result = await client.query<{id: number}>(
+      `INSERT INTO game(name) VALUES($1) RETURNING id;`,
+      [name]
+    );
+    const id = result.rows[0].id;
+    if (id === undefined) throw new Error();
+    return id;
+  } catch ( error ) {
+    console.log(error);
+    throw new Error();
+  }
+}
