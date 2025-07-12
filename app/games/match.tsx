@@ -16,8 +16,8 @@ export default function Match({ game, date, winner, players }: MatchProps) {
         <div className="font-bold">{winner.join(', ')}</div>
         <div className="text-right">{game}</div>
       </div>
-      <span className='absolute opacity-35 -bottom-1.5 -left-6 text-6xl -z-10'>👑</span> 
-      <span className='absolute opacity-35 -bottom-1.5 -right-2 text-4xl -z-10'>🎲</span> 
+      <span className='absolute opacity-35 -bottom-1 -left-5 text-6xl -z-10'>👑</span> 
+      <span className='absolute opacity-35 -bottom-3 -right-3 text-6xl -z-10'>🎲</span> 
 
     </div>
   );
