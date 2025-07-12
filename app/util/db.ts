@@ -131,3 +131,42 @@ export async function createGame({ name }: CreateGameInput): Promise<number> {
     throw new Error();
   }
 }
+
+type GetMatchHistoryRow = {
+  match_id: number;
+  match_date: Date;
+  game_name: string;
+  player_names: string;
+  winner_names: string;
+}
+export type GetMatchHistoryResult = Omit<GetMatchHistoryRow, 'match_date' | 'player_names' | 'winner_names'> & { match_date: string, player_names: string[], winner_names: string[]};
+export async function getMatchHistory() {
+  try {
+    const { rows } = await pool.query<GetMatchHistoryRow>(`SELECT
+          m.id AS match_id,
+          m.date AS match_date,
+          g.name AS game_name,
+          STRING_AGG(p.name, ', ' ORDER BY p.name) AS player_names,
+          (
+              SELECT STRING_AGG(p2.name, ', ' ORDER BY p2.name)
+              FROM match_player mp2
+              JOIN player p2 ON p2.id = mp2.player_id
+              WHERE mp2.match_id = m.id AND mp2.is_winner = true
+          ) AS winner_names
+      FROM match m
+      JOIN game g ON m.game_id = g.id
+      JOIN match_player mp ON mp.match_id = m.id
+      JOIN player p ON p.id = mp.player_id
+      GROUP BY m.id, m.date, g.name
+      ORDER BY m.date DESC, m.id;`);
+    return rows?.map(row => ({
+      ...row,
+      player_names: row.player_names.split(',').map(name => name.trim()),
+      winner_names: row.winner_names.split(',').map(name => name.trim()),
+      match_date: formatDate(row.match_date),
+    })) || [];
+  } catch ( error ) {
+    console.log(error);
+    throw new Error();
+  }
+}

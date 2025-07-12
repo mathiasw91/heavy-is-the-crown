@@ -1,10 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 export default function Nav() {
-
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const links = [
+    { href: '/standings', label: 'Standings' },
+    { href: '/games', label: 'Games' },
+  ];
   const linkClasses = (active = false) => `block py-2 px-3 rounded ${active ? 'bg-highlight' : ''} md:hover:bg-highlight md:border-0 md:p-0 text-secondary`;
 
   return (
@@ -20,15 +25,11 @@ export default function Nav() {
         </button>
         <div className={`${mobileOpen ? '' : 'hidden'} w-full md:block md:w-auto`}>
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-highlight rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-gray-900">
-            <li>
-              <a href="#" className={linkClasses(true)}>Standings</a>
-            </li>
-            <li>
-              <a href="#" className={linkClasses()}>Games</a>
-            </li>
-            <li>
-              <a href="#" className={linkClasses()}>Players</a>
-            </li>
+            {links.map(link => (
+              <li key={link.href}>
+                <a href={link.href} className={linkClasses(pathname === link.href)}>{link.label}</a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
