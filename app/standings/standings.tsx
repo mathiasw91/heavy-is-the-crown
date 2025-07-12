@@ -16,14 +16,16 @@ export default function Standings({ standingsPromise }: StandingsProps) {
     <div>play your first match</div>
   );
   return (
-    <div className='flex flex-col gap-2 overlow-y-auto'>
-      {standings.map(standing => (
-        (standing.rank === 1) && (
-          <Leader key={standing.rank} standing={standing} />
-        ) || (
-          <Standing key={standing.rank} standing={standing} />
-        )
-      ))}
+    <div className='flex flex-col gap-2 overflow-hidden'>
+      <div className='h-full overflow-y-auto'>
+        {standings.map(standing => (
+          (standing.rank === 1) && (
+            <Leader key={standing.rank} standing={standing} />
+          ) || (
+            <Standing key={standing.rank} standing={standing} />
+          )
+        ))}
+      </div>
     </div>
   );
 }

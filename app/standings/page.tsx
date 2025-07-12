@@ -9,7 +9,7 @@ export default async function StandingsPage() {
   const standingsPromise = getStandings();
   const summaryPromise = getSummary();
   return (
-    <div className='grid grid-rows-[1fr_auto] h-full'>
+    <div className='grid grid-rows-[1fr_auto] h-full overflow-hidden'>
       <Suspense fallback={<div>Loading...</div>}>
         <Standings standingsPromise={standingsPromise} />
       </Suspense>
